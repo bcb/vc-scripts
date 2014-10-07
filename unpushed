@@ -6,7 +6,7 @@ if [[ $# -gt 0 ]]; then
 
 	for basedir in "$@"; do
 		if [ -d $basedir ]; then
-			for d in $(find -H $basedir -name .hg -type d |sed 's|.hg||' |sort); do
+			for d in $(find -H $basedir -name .hg -type d |sed 's|\.hg||' |sort); do
 
 				outgoing=$(hg outgoing -R $d)
 
