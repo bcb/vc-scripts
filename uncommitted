@@ -1,0 +1,32 @@
+#!/bin/bash
+
+total_uncommitted=0
+
+if [[ $# -gt 0 ]]; then
+
+	for basedir in "$@"; do
+		if [ -d $basedir ]; then
+			for d in $(find -H $basedir -name .hg -type d |sed 's|.hg||' |sort); do
+
+				uncommitted=$(hg status -R $d)
+
+				if [[ $? -eq 0 && -n $uncommitted ]]; then
+
+					echo "$d"
+					hg status -R $d
+					let total_uncommitted++
+
+				fi
+			done	
+
+		fi
+	done	
+
+else
+
+	echo "Usage: $(basename $0) directory" >&2
+	exit 1
+
+fi
+
+exit $total_uncommitted

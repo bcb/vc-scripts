@@ -1,0 +1,32 @@
+#!/bin/bash
+
+total_incoming=0
+
+if [[ $# -gt 0 ]]; then
+
+	for basedir in "$@"; do
+		if [ -d $basedir ]; then
+			for d in $(find -H $basedir -name .hg -type d |sed 's|.hg||' |sort); do
+
+				incoming=$(hg incoming -R $d)
+
+				if [[ $? -eq 0 && -n $incoming ]]; then
+
+					echo "$d"
+					echo "$incoming" |ack 'summary:'
+					let total_incoming++
+
+				fi
+			done
+
+		fi
+	done
+
+else
+
+	echo "Usage: $(basename $0) directory" >&2
+	exit 1
+
+fi
+
+exit $total_unpulled
