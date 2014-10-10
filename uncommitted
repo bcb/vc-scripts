@@ -11,11 +11,9 @@ if [[ $# -gt 0 ]]; then
 				uncommitted=$(hg status -R $d)
 
 				if [[ $? -eq 0 && -n $uncommitted ]]; then
-
 					echo "$d"
 					hg status -R $d
 					let total_uncommitted++
-
 				fi
             done
 
