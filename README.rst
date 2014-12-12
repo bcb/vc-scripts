@@ -15,3 +15,6 @@ Usage
     $ uncommitted ~/myrepos
     /home/user/myrepos/myapp/
     ? README.rst
+
+    $ unpulled ~/myrepos
+    $ unpushed ~/myrepos
