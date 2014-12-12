@@ -14,8 +14,8 @@ Usage
 
     $ uncommitted ~/myrepos
     /home/user/myrepos/myapp/
-    ? README.rst
-    $ hg ci -R ~/myrepos/myapp -m 'Added readme'
+    M README.rst
+    $ hg ci -R ~/myrepos/myapp -m 'Updated readme'
     $ unpulled ~/myrepos
     $ unpushed ~/myrepos
     /home/user/myrepos/myapp/
