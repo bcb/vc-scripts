@@ -21,3 +21,4 @@ Usage
     /home/user/myrepos/myapp/
     summary:    Updated readme
     $ hg push -R ~/myrepos/myapp
+    pushing to ...
