@@ -1,8 +1,7 @@
 hg-scripts
 ==========
 
-These scripts recursively check the status of all Mercurial repositories in a
-given directory.
+Recursively check the status of all Mercurial repositories in a given directory.
 
 * *uncommitted* checks the repositories for uncommitted changes.
 * *unpulled* checks the repositories for unpulled changes.
