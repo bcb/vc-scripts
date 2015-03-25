@@ -3,9 +3,12 @@ hg-scripts
 
 Recursively check the status of Mercurial repositories in a given directory.
 
-* *uncommitted* shows uncommitted changes.
-* *unpulled* shows unpulled changes.
-* *unpushed* shows unpushed changes.
+uncommitted
+    Shows uncommitted changes.
+unpulled
+    Shows unpulled changes.
+unpushed
+    Shows unpushed changes.
 
 Usage
 -----
