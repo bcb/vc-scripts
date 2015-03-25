@@ -1,7 +1,7 @@
 hg-scripts
 ==========
 
-Recursively check the status of Mercurial repositories in a given directory.
+Recursively check the status of Mercurial repositories.
 
 uncommitted
     Shows uncommitted changes.
