@@ -4,26 +4,26 @@ total_outgoing=0
 
 if [[ $# -gt 0 ]]; then
 
-	for basedir in "$@"; do
-		if [ -d $basedir ]; then
-			for d in $(find -H $basedir -name .hg -type d |sed 's|\.hg||' |sort); do
+    for basedir in "$@"; do
+        if [ -d $basedir ]; then
+            for d in $(find -H $basedir -name .hg -type d |sed 's|\.hg||' |sort); do
 
-				outgoing=$(hg outgoing -R $d)
+                outgoing=$(hg outgoing -R $d)
 
-				if [[ $? -eq 0 && -n $outgoing ]]; then
-					echo "$d"
-					echo "$outgoing" |ack 'summary:'
-					let total_outgoing++
-				fi
-			done
+                if [[ $? -eq 0 && -n $outgoing ]]; then
+                    echo "$d"
+                    echo "$outgoing" |ack 'summary:'
+                    let total_outgoing++
+                fi
+            done
 
-		fi
-	done
+        fi
+    done
 
 else
 
-	echo "Usage: $(basename $0) directory" >&2
-	exit 1
+    echo "Usage: $(basename $0) directory" >&2
+    exit 1
 
 fi
 
