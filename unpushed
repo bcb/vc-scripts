@@ -12,7 +12,7 @@ if [[ $# -gt 0 ]]; then
                 outgoing=$(hg outgoing -R $d)
 
                 if [[ $? -eq 0 && -n $outgoing ]]; then
-                    echo "$d"
+                    # echo "$d"
                     echo "$outgoing" |ack 'summary:'
                     let total_outgoing++
                 fi
