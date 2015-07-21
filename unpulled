@@ -1,30 +1,37 @@
 #!/bin/bash
 
-total_incoming=0
+total_unpulled=0
 
 if [[ $# -gt 0 ]]; then
 
-    for basedir in "$@"; do
-        if [ -d $basedir ]; then
-            for d in $(find -H $basedir -name .hg -type d |sed 's|\.hg||' |sort); do
+  for basedir in "$@"; do
+    if [ -d $basedir ]; then
+      for d in $(find -H $basedir -type d -name .hg -o -name .git |sed 's#/\.hg\|/\.git##' |sort); do
 
-                echo $d >&2
-                incoming=$(hg incoming -R $d)
+        echo -e "\033[1;34m$d\033[0m" >&2
 
-                if [[ $? -eq 0 && -n $incoming ]]; then
-                    # echo "$d"
-                    echo "$incoming" |ack 'summary:'
-                    let total_incoming++
-                fi
-            done
+        # hg
+        if [ -d "$d/.hg" ]; then
+          unpulled=$(hg incoming -R $d |ack 'summary:')
+        # git
+        elif [ -d "$d/.git" ]; then
+          unpulled=$(git -C $d fetch && git -C $d log ..origin/master |grep -vE '^(commit |Author:|Date:)' |grep . |sed 's/^    //')
+        fi    
 
+        if [[ $? -eq 0 && -n $unpulled ]]; then
+          echo "$unpulled"
+          let total_unpulled++
         fi
-    done
+
+      done
+
+    fi
+  done
 
 else
 
-    echo "Usage: $(basename $0) directory" >&2
-    exit 1
+  echo "Usage: $(basename $0) directory" >&2
+  exit 1
 
 fi
 

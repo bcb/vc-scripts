@@ -1,7 +1,7 @@
-hg-scripts
+vc-scripts
 ==========
 
-Recursively check the status of Mercurial repositories.
+Recursively check the status of version control repositories.
 
 uncommitted
     Shows uncommitted changes.

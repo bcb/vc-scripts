@@ -4,26 +4,32 @@ total_uncommitted=0
 
 if [[ $# -gt 0 ]]; then
 
-    for basedir in "$@"; do
-        if [ -d $basedir ]; then
-            for d in $(find -H $basedir -name .hg -type d |sed 's|\.hg||' |sort); do
+  for basedir in "$@"; do
+    if [ -d $basedir ]; then
+      for d in $(find -H $basedir -type d -name .hg -o -name .git |sed 's#/\.hg\|/\.git##' |sort); do
 
-                uncommitted=$(hg status -R $d)
+        # hg
+        if [ -d "$d/.hg" ]; then
+          uncommitted=$(hg status -R $d)
+        # git
+        elif [ -d "$d/.git" ]; then
+          uncommitted=$(git -C $d status |grep 'modified:' |sed 's/\tmodified:   /M /')
+        fi    
 
-                if [[ $? -eq 0 && -n $uncommitted ]]; then
-                    echo "$d"
-                    hg status -R $d
-                    let total_uncommitted++
-                fi
-            done
-
+        if [[ $? -eq 0 && -n $uncommitted ]]; then
+          echo -e "\033[1;34m$d\033[0m"
+          echo "$uncommitted"
+          let total_uncommitted++
         fi
-    done
+
+      done
+    fi
+  done
 
 else
 
-    echo "Usage: $(basename $0) directory" >&2
-    exit 1
+  echo "Usage: $(basename $0) directory" >&2
+  exit 1
 
 fi
 
