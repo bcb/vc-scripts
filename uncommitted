@@ -6,7 +6,7 @@ if [[ $# -gt 0 ]]; then
 
   for basedir in "$@"; do
     if [ -d $basedir ]; then
-      for d in $(find -H $basedir -type d -name .hg -o -name .git |sed 's#/\.hg\|/\.git##' |sort); do
+      for d in $(find -H $basedir -type d -name .hg -o -name .git |sed -E 's#/\.hg|/\.git##' |sort); do
 
         # hg
         if [ -d "$d/.hg" ]; then
