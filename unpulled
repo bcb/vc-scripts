@@ -12,11 +12,11 @@ if [[ $# -gt 0 ]]; then
 
         # hg
         if [ -d "$d/.hg" ]; then
-          unpulled=$(hg incoming -R $d |ack 'summary:')
+          unpulled=$(hg incoming -R $d |ack 'summary:' |sed 's/summary:     //')
         # git
         elif [ -d "$d/.git" ]; then
           unpulled=$(git -C $d fetch && git -C $d log ..origin/master |grep -vE '^(commit |Author:|Date:)' |grep . |sed 's/^    //')
-        fi    
+        fi
 
         if [[ $? -eq 0 && -n $unpulled ]]; then
           echo "$unpulled"
